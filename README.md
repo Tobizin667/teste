@@ -2537,85 +2537,91 @@ OrionLib:MakeNotification({
 
 local W = Window:MakeTab({
     Name = "Bem-Vindo",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local M = Window:MakeTab({
     Name = "Geral",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local ST = Window:MakeTab({
     Name = "Configurar",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local IQ = Window:MakeTab({
     Name = "Itens e Quests",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local S = Window:MakeTab({
     Name = "Status",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local E = Window:MakeTab({
     Name = "ESP",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local RA = Window:MakeTab({
     Name = "Raid",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local LC = Window:MakeTab({
     Name = "Players Locais",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local Wld = Window:MakeTab({
     Name = "Teleportar mundo",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local SV = Window:MakeTab({
     Name = "Status Server",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local D = Window:MakeTab({
     Name = "Vendedor Fruta",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local R = Window:MakeTab({
     Name = "Corrida V4",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
 local SH = Window:MakeTab({
     Name = "Loja",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
+    PremiumOnly = false
+})
+
+local SH = Window:MakeTab({
+    Name = "Novos",
+    Icon = "",
     PremiumOnly = false
 })
 
 local C = Window:MakeTab({
     Name = "Outros",
-    Icon = "rbxassetid://119980140458596",
+    Icon = "",
     PremiumOnly = false
 })
 
@@ -3010,6 +3016,57 @@ ToggleFarm = M:AddToggle({
         _G.AutoFarm = Value
         StopTween(_G.AutoFarm)
     end    
+})
+
+local Section = M:AddSection({
+    Name = "Novos"
+})
+
+M:AddParagraph("Novos", "Clique na caixa para mostrar as frutas proximas")
+
+M:AddToggle({
+ Name = "Caixa de linha frutas",
+ Default = false,
+ Flag = "Novos",
+ Save = true,
+ Callback = function(Value)
+ _G.AutoFarmFruitMastery = Value
+ StopTween(_G.AutoFarmFruitMastery)
+ if _G.AutoFarmFruitMastery == false then
+ UseSkill = false
+ else 
+-- Função para localizar frutas próximas e traçar linhas 
+local function localizarFrutasProximasEDesenharLinhas(distanciaMaxima)
+ local frutasProximas = {}
+ local jogador = game.Players.LocalPlayer.Character
+ local jogadorPosicao = jogador.HumanoidRootPart.Position
+
+ for _, fruta in pairs(game.Workspace:GetChildren()) do
+ if fruta:IsA("Part") and fruta.Name == "Fruit" then
+ local distancia = (fruta.Position - jogadorPosicao).magnitude
+ if distancia <= distanciaMaxima then
+ table.insert(frutasProximas, fruta)
+
+ local beamPart1 = Instance.new("Attachment", jogador.HumanoidRootPart)
+ beamPart1.Position = Vector3.new(0, 2, 0) -- Ajuste a posição inicial se necessário local 
+ beamPart2 = Instance.new("Attachment", fruta)
+
+ local beam = Instance.new("Beam")
+ beam.Attachment0 = beamPart1
+ beam.Attachment1 = beamPart2 
+ beam.Color = ColorSequence.new(Color3.new(1, 0, 0)) -- Cor vermelha
+ beam.FaceCamera = true
+ beam.Parent = jogador.HumanoidRootPart
+ 			end
+ 		end
+	end
+	return frutasProximas 
+end
+
+local distanciaMaxima = 999 -- Defina a distância máxima desejada
+localizarFrutasProximasEDesenharLinhas(distanciaMaxima) 
+	end 
+end
 })
 
 local Section = M:AddSection({
