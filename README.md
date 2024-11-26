@@ -3019,57 +3019,6 @@ ToggleFarm = M:AddToggle({
 })
 
 local Section = M:AddSection({
-    Name = "Novos"
-})
-
-M:AddParagraph("Novos", "Clique na caixa para mostrar as frutas proximas")
-
-M:AddToggle({
- Name = "Caixa de linha frutas",
- Default = false,
- Flag = "Novos",
- Save = true,
- Callback = function(Value)
- _G.AutoFarmFruitMastery = Value
- StopTween(_G.AutoFarmFruitMastery)
- if _G.AutoFarmFruitMastery == false then
- UseSkill = false
- else 
--- Função para localizar frutas próximas e traçar linhas 
-local function localizarFrutasProximasEDesenharLinhas(distanciaMaxima)
- local frutasProximas = {}
- local jogador = game.Players.LocalPlayer.Character
- local jogadorPosicao = jogador.HumanoidRootPart.Position
-
- for _, fruta in pairs(game.Workspace:GetChildren()) do
- if fruta:IsA("Part") and fruta.Name == "Fruit" then
- local distancia = (fruta.Position - jogadorPosicao).magnitude
- if distancia <= distanciaMaxima then
- table.insert(frutasProximas, fruta)
-
- local beamPart1 = Instance.new("Attachment", jogador.HumanoidRootPart)
- beamPart1.Position = Vector3.new(0, 2, 0) -- Ajuste a posição inicial se necessário local 
- beamPart2 = Instance.new("Attachment", fruta)
-
- local beam = Instance.new("Beam")
- beam.Attachment0 = beamPart1
- beam.Attachment1 = beamPart2 
- beam.Color = ColorSequence.new(Color3.new(1, 0, 0)) -- Cor vermelha
- beam.FaceCamera = true
- beam.Parent = jogador.HumanoidRootPart
- 			end
- 		end
-	end
-	return frutasProximas 
-end
-
-local distanciaMaxima = 999 -- Defina a distância máxima desejada
-localizarFrutasProximasEDesenharLinhas(distanciaMaxima) 
-	end 
-end
-})
-
-local Section = M:AddSection({
     Name = "Menu de maestria"
 })
 
