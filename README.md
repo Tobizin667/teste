@@ -2510,7 +2510,7 @@ CamShake:Stop()
     end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Next Script", HidePremium = false, IntroText = "", SaveConfig = true, ConfigFolder = "Next Script"})
+local Window = OrionLib:MakeWindow({Name = "Next Script", HidePremium = false, IntroText = "https://discord.gg/xVSdGzc7SN", SaveConfig = true, ConfigFolder = "Next Script"})
 
 OrionLib:MakeNotification({
 	Name = "Next Script",
@@ -2521,7 +2521,7 @@ OrionLib:MakeNotification({
 
 OrionLib:MakeNotification({
 	Name = "Next Script",
-	Content = "Next Script",
+	Content = "https://discord.gg/xVSdGzc7SN",
 	Image = "rbxassetid://119980140458596",
 	Time = 25
 })
